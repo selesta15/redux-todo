@@ -1,0 +1,53 @@
+.container {
+  margin: 0 auto;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 7px 30px rgba(75, 70, 6, 0.3);
+
+  .input-form {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+
+    background: url(./assets/img/fon-container.jpeg) center/cover no-repeat;
+    height: 100px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    > * {
+      background: transparent;
+      border: none;
+    }
+
+    .todo-list {
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    button {
+      border: none;
+      background-color: #aba4cc;
+      border-radius: 10px;
+    }
+  }
+
+  .filter-buttons {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      border: none;
+      background: none;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #aba4cc;
+      }
+    }
+  }
+}
