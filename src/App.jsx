@@ -8,9 +8,14 @@ import { getTodos } from "./redux/todo/selectors";
 import { filterTodo } from "./redux/filter/actions"; 
 import styled from "./styled.module.scss";
 import AddIcon from '@mui/icons-material/Add';
+import {TYPE_OF_FILTER} from "./redux/filter/reduser";
+import {getActiveFilter} from "./redux/filter/selector";
+
+
 
 const App = () => {
   const todos = useSelector(getTodos);
+  const activeTodoFilter = useSelector(getActiveFilter)
   const [inputValue, setInputValue] = useState('');
 
   const dispatch = useDispatch();
@@ -39,9 +44,6 @@ const App = () => {
     dispatch(deleteTodo(id));
   };
 
-  const handleFilterClick = (filter) => {
-    dispatch(filterTodo(filter)); 
-  };
 
   const renderTodoItem = (todo, idx) => {
     return (
@@ -53,6 +55,20 @@ const App = () => {
         onDelete={() => handleDeleteTodo(todo.id)}
       />
     );
+  };
+
+
+  const filterTodos = (todos, filter) => {
+    if (filter === TYPE_OF_FILTER.SHOW_ALL) {
+      return todos;
+    }
+    if (filter === TYPE_OF_FILTER.SHOW_ACTIVE) {
+      return todos.filter(todo => !todo.isComplete);
+    }
+    if (filter === TYPE_OF_FILTER.SHOW_COMPLETED) {
+      return todos.filter(todo => todo.isComplete);
+    }
+    return todos;
   };
 
   return (
@@ -68,17 +84,17 @@ const App = () => {
         </Button>
       </div>
       <div className={styled['todo-list']}>
-        {todos.map(renderTodoItem)}
+      {filterTodos(todos, activeTodoFilter).map(renderTodoItem)}
       </div>
       <div className={styled['filter-buttons']}>
-        <Button onClick={() => handleFilterClick('SHOW_ALL')}>
+      <Button onClick={() => dispatch(filterTodo(TYPE_OF_FILTER.SHOW_ALL))}>
           All
         </Button>
-        <Button onClick={() => handleFilterClick('SHOW_ACTIVE')}>
-           Active
+        <Button onClick={() => dispatch(filterTodo(TYPE_OF_FILTER.SHOW_ACTIVE))}>
+          Active
         </Button>
-        <Button onClick={() => handleFilterClick('SHOW_COMPLETED')}>
-           Completed
+        <Button onClick={() => dispatch(filterTodo(TYPE_OF_FILTER.SHOW_COMPLETED))}>
+          Completed
         </Button>
       </div>
     </div>

@@ -1,14 +1,20 @@
-import { FILTER_TODO } from './types';
+import {FILTER_TODO} from "./types";
 
-const defaultState = 'SHOW_ALL';
+export const TYPE_OF_FILTER = {
+  SHOW_ALL: 'SHOW_ALL',
+  SHOW_ACTIVE: 'SHOW_ACTIVE',
+  SHOW_COMPLETED: 'SHOW_COMPLETED'
+}
 
-const visibilityFilterReducer = (state = defaultState, action) => {
+const initialState = TYPE_OF_FILTER.SHOW_ALL
+
+const todoFilterReducer = (state = initialState, action) => {
   switch (action.type) {
     case FILTER_TODO:
-      return action.filter;
+      return action.payload !== undefined ? action.payload : state;
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default visibilityFilterReducer;
+export default todoFilterReducer
